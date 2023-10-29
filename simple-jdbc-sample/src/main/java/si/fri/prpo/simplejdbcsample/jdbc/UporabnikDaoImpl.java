@@ -79,18 +79,50 @@ public class UporabnikDaoImpl implements BaseDao {
     @Override
     public void vstavi(Entiteta ent) {
         //programska koda za vstavljanje uporabnikov
-
+        PreparedStatement ps;
+        Uporabnik uporabnik = (Uporabnik) ent;
+        try {
+            String sql = "INSERT INTO uporabnik (ime, priimek, uporabniskoime) VALUES (?, ?, ?)";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, uporabnik.getIme());
+            ps.setString(2, uporabnik.getPriimek());
+            ps.setString(3, uporabnik.getUporabniskoIme());
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            log.severe(e.toString());
+        }
     }
 
     @Override
     public void odstrani(int id) {
         //programska koda za odstranjevanje uporabnikov
+        PreparedStatement ps;
+        try {
+            String sql = "DELETE FROM uporabnik WHERE id = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            log.severe(e.toString());
+        }
     }
 
     @Override
     public void posodobi(Entiteta ent) {
         //programska koda za posodabljanje uporabnikov
-
+        Uporabnik uporabnik = (Uporabnik) ent;
+        PreparedStatement ps;
+        try {
+            String sql = "UPDATE uporabnik SET ime = ?, priimek = ?, uporabniskoime = ? WHERE id = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, uporabnik.getIme());
+            ps.setString(2, uporabnik.getPriimek());
+            ps.setString(3, uporabnik.getUporabniskoIme());
+            ps.setInt(4, uporabnik.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            log.severe(e.toString());
+        }
     }
 
     @Override

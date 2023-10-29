@@ -36,18 +36,19 @@ public class PrviJdbcServlet extends HttpServlet {
         Uporabnik uporabnik = new Uporabnik("Miha", "Novak", "mihanovak");
 
         // dodajanje uporabnika
-        //writer.append("Dodajam uporabnika:\n" + uporabnik.toString());
-        //uporabnikDao.vstavi(uporabnik);
-        //writer.append("\n\n");
+        writer.append("Dodajam uporabnika:\n" + uporabnik.toString());
+        uporabnikDao.vstavi(uporabnik);
+        writer.append("\n\n");
 
         // demonstracija preostalih metod
+        writer.append("Odstranim uporabnika z id 1");
+        uporabnikDao.odstrani(1);
+        writer.append("\n\n");
 
         // izpis vseh uporabnikov
         writer.append("Seznam obstojecih uporabnikov:\n");
         List<Entiteta> uporabniki = uporabnikDao.vrniVse();
         uporabniki.stream().forEach(u -> writer.append(u.toString() + "\n"));
-
-
 
 
     }
